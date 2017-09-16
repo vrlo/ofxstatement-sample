@@ -9,12 +9,12 @@ version = "0.0.1"
 with open('README.rst') as f:
     long_description = f.read()
 
-setup(name='ofxstatement-sample',
+setup(name='ofxstatement-zaba',
       version=version,
-      author="Andrey Lebedev",
-      author_email="andrey@lebedev.lt",
-      url="https://github.com/kedder/ofxstatement",
-      description=("Sample plugin for ofxstatement"),
+      author="Lovro Seder",
+      author_email="vrovro@gmail.com",
+      url="https://github.com/vrlo/ofxstatement-zaba",
+      description=("ofxstatement plugin for Zaba xls"),
       long_description=long_description,
       license="GPLv3",
       keywords=["ofx", "banking", "statement"],
@@ -32,9 +32,9 @@ setup(name='ofxstatement-sample',
       namespace_packages=["ofxstatement", "ofxstatement.plugins"],
       entry_points={
           'ofxstatement':
-          ['sample = ofxstatement.plugins.sample:SamplePlugin']
+          ['zaba = ofxstatement.plugins.zaba:ZabaPlugin']
           },
-      install_requires=['ofxstatement'],
+      install_requires=['ofxstatement', 'xlrd'],
       include_package_data=True,
       zip_safe=True
       )
