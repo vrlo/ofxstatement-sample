@@ -108,6 +108,8 @@ class ZabaParser(StatementParser):
         # apply generated transaction id
         stmt_line.id = self.gen_id(stmt_line)
 
+        # overwrite end balance with current balance
+        self.statement.end_balance = stmt_line.balance
         # next row
         self.row_nr += 1
         return stmt_line
