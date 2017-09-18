@@ -94,15 +94,15 @@ class ZabaParser(StatementParser):
             cell = row[col]
             value = self.parse_value(cell)
             # calculate debits and credits to amount
-            if field == 'debit':
+            if field == 'debit' and value != 0:
                 stmt_line.amount += value
-            elif field == 'credit':
+                stmt_line.trntype = 'DEBIT'
+            elif field == 'credit' and value != 0:
                 stmt_line.amount -= value
+                stmt_line.trntype = 'CREDIT'
             else:
                 setattr(stmt_line, field, value)
 
-        # determine transaction type based od memo
-        stmt_line.trntype = self.determine_trntype(stmt_line)
         # apply generated transaction id
         stmt_line.id = self.gen_id(stmt_line)
 
@@ -123,17 +123,3 @@ class ZabaParser(StatementParser):
         """ generate transaction id
         """
         return self.statement.account_id + stmtln.refnum
-
-    def determine_trntype(self, stmtln):
-        m = search(r"""
-            (?P<int>kamata)|            # INT - interest earned or paid
-            (?P<div>divid|opdiv)|       # DIV - dividend
-            (?P<fee>naknada)|           # FEE
-            (?P<atm>atm|bankomat)|      # ATM
-            (?P<xfer>prijenos)          # XFER
-            """, stmtln.memo, IGNORECASE|VERBOSE)
-        if m:
-            return [k for k,v in m.groupdict().items() if v][0].upper()
-        else:
-            return 'OTHER'
-
