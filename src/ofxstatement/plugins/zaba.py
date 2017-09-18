@@ -49,6 +49,8 @@ class ZabaParser(StatementParser):
             self.sh = book.sheet_by_index(0)
             self.datemode = book.datemode
             self.statement.bank_id = self.bank_id
+            # set default currency
+            self.statement.currency = 'HRK'
             return super(ZabaParser, self).parse()
 
     def split_records(self):
