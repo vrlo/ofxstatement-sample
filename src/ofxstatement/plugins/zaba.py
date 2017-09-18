@@ -122,4 +122,4 @@ class ZabaParser(StatementParser):
     def gen_id(self, stmtln):
         """ generate transaction id
         """
-        return self.statement.account_id + stmtln.refnum
+        return stmtln.refnum
